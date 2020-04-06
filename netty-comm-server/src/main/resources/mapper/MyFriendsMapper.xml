@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kx.netty.nettycommserver.dao.MyFriendsMapper" >
+  <resultMap id="BaseResultMap" type="com.kx.netty.nettycommserver.pojo.MyFriends" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="my_user_id" property="myUserId" jdbcType="VARCHAR" />
+    <result column="my_friend_user_id" property="myFriendUserId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, my_user_id, my_friend_user_id
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.kx.netty.nettycommserver.pojo.MyFriendsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from my_friends
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from my_friends
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from my_friends
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.kx.netty.nettycommserver.pojo.MyFriendsExample" >
+    delete from my_friends
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.kx.netty.nettycommserver.pojo.MyFriends" >
+    insert into my_friends (id, my_user_id, my_friend_user_id
+      )
+    values (#{id,jdbcType=VARCHAR}, #{myUserId,jdbcType=VARCHAR}, #{myFriendUserId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.kx.netty.nettycommserver.pojo.MyFriends" >
+    insert into my_friends
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="myUserId != null" >
+        my_user_id,
+      </if>
+      <if test="myFriendUserId != null" >
+        my_friend_user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="myUserId != null" >
+        #{myUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="myFriendUserId != null" >
+        #{myFriendUserId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.kx.netty.nettycommserver.pojo.MyFriendsExample" resultType="java.lang.Integer" >
+    select count(*) from my_friends
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update my_friends
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.myUserId != null" >
+        my_user_id = #{record.myUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.myFriendUserId != null" >
+        my_friend_user_id = #{record.myFriendUserId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update my_friends
+    set id = #{record.id,jdbcType=VARCHAR},
+      my_user_id = #{record.myUserId,jdbcType=VARCHAR},
+      my_friend_user_id = #{record.myFriendUserId,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kx.netty.nettycommserver.pojo.MyFriends" >
+    update my_friends
+    <set >
+      <if test="myUserId != null" >
+        my_user_id = #{myUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="myFriendUserId != null" >
+        my_friend_user_id = #{myFriendUserId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kx.netty.nettycommserver.pojo.MyFriends" >
+    update my_friends
+    set my_user_id = #{myUserId,jdbcType=VARCHAR},
+      my_friend_user_id = #{myFriendUserId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <resultMap id="MyFriendsResultMap" type="com.kx.netty.nettycommserver.vo.MyFriendsVO" >
+    <result column="friendUserId" property="friendUserId" jdbcType="VARCHAR" />
+    <result column="friendUsername" property="friendUsername" jdbcType="VARCHAR" />
+    <result column="friendFaceImage" property="friendFaceImage" jdbcType="VARCHAR" />
+    <result column="friendNickname" property="friendNickname" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <select id="queryMyFriends"
+          resultMap="MyFriendsResultMap"
+          parameterType="String">
+
+		select
+			u.id as friendUserId,
+			u.username as friendUsername,
+			u.face_image as friendFaceImage,
+			u.nickname as friendNickname
+		from
+			my_friends mf
+		left join
+			users u
+		on
+			u.id = mf.my_friend_user_id
+		where
+			mf.my_user_id = #{userId}
+
+	</select>
+
+</mapper>
